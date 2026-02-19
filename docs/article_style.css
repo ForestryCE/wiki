@@ -1,0 +1,671 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('Minecraft.otf') format('opentype')
+        }
+
+        body {
+            font-family: 'Whitney', 'Segoe UI', sans-serif;
+            background: #f7f7f5;
+            color: #1e1e1e;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ---------- STICKY HEADER  ---------- */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(90deg, #f3c40a, #ff6600);
+            padding: 0.65rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: padding 0.3s ease, background 0.2s;
+            width: 100%;
+        }
+
+
+        .sticky-header.header-shrink {
+            padding: 0rem 0rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            flex-wrap: nowrap;
+            transition: transform 0.9s ease;
+        }
+
+        .image {
+            width: 80px;
+            height: 80px;
+            image-rendering: pixelated;
+            overflow: hidden;
+            flex-shrink: 0;
+            transition: width 0.25s ease, height 0.25s ease, transform 0.2s ease;
+            transform: scale(1);
+            border-image: 1px;
+        }
+
+        .image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .header-shrink .image  {
+            transform: scale(0.65);
+            transition: transform 0.15s ease;
+
+        }
+
+        .title-subtitle {
+            display: flex;
+            flex-direction: column;
+            justify-content:center;
+            transition: transform 0.3s ease;
+        }
+
+        .title-subtitle h1 {
+            font-family: 'Dela Gothic One', cursive;
+            font-size: 2.2rem;
+            line-height: 1.2;
+            background: black;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            display: inline-block;
+            border-radius: 1px;
+            letter-spacing: 1px;
+            margin: 0;
+            transition: font-size 0.25s ease, padding 0.2s;
+        }
+
+        .header-shrink .title-subtitle h1 {
+            font-size: 1.2rem;
+            padding: 0.1rem 0.5rem;
+        }
+
+        .title-subtitle .sub {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            background: black;
+            color: #eee;
+            padding: 0.2rem 0.8rem;
+            margin-top: 4px;
+            border-radius: 1px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: opacity 0.2s, transform 0.4s ease;
+        }
+
+        /* subtitle wooshes out */
+        .header-shrink .title-subtitle .sub {
+            transform: translateY(30%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s,transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-wrap: nowrap;
+        }
+        /* BIG */
+        .header-shrink .title-subtitle h1 {
+            transform: translateY(15%);
+            justify-content: center;
+            pointer-events: none;
+            transition: transform .4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .header-shrink .title-subtitle  {
+            height: 2%;
+            pointer-events: none;
+            transition: transform .6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header-links {
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+            transition: opacity 0.25s ease, visibility 0.25s padding 0.2s ease;
+        }
+
+        .header-shrink .header-links {
+            padding-right: 2rem;
+            transition: padding 0.2s ease;
+        }
+
+        .header-links a {
+            font-family: 'Space Grotesk', sans-serif;
+            background: white;
+            color: black;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 1px solid #333;
+            transition: 0.15s;
+            white-space: nowrap;
+        }
+
+        .header-links a:hover {
+            background: #000000;
+            color: rgb(255, 255, 255);
+        }
+
+        /* ---------- WIKI GRID ---------- */
+        .wiki-grid {
+            display: flex;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        /* Table of contents */
+        .toc-sidebar {
+            flex: 0 0 240px;
+            position: sticky;
+            top: 30vh;
+            align-self: start;
+            background: #f0efea;
+            padding: 1.2rem 1rem;
+            border-radius: 16px;
+            border-left: 6px solid #ff9900;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+            font-family: 'Space Grotesk';
+        }
+
+        .toc-sidebar h3 {
+            font-family: 'Dela Gothic One', cursive;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #ffb347;
+            padding-bottom: 0.3rem;
+            background: black;
+            color: white;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc-list a {
+            text-decoration: none;
+            color: #2d2d2d;
+            font-weight: 500;
+            border-bottom: 1px dashed #aaa;
+            display: inline-block;
+            padding: 4px 0;
+        }
+
+        /* ---------- MAIN CONTENT ---------- */
+        .wiki-content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+            width: 100%;
+            text-align: left;
+        }
+
+        .article-header h2 {
+            font-family: 'Dela Gothic One', cursive;
+            font-size: 2.4rem;
+            background: black;
+            color: white;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 4px;
+            margin-bottom: 0.8rem;
+        }
+
+        /* similar pages */
+        .topic-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 00rem 1rem;
+            align-items: center;
+            background: #e8e6dd;
+            padding: 0.5rem 1rem;
+            border-radius: 40px; 
+            overflow:scroll;
+            text-wrap: none;
+        }
+
+        .topic-links span {
+            font-weight: 600;
+            color: #3a3a3a;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .topic-links a {
+            color: #2b2b2b;
+            text-decoration: none;
+            background: white;
+            padding: 0.1rem 0.5rem;
+            border-radius: 30px;  
+            border: 1px solid #b3a68f;
+            font-weight: 500;
+            font-size: 0.7rem;
+            transition: 0.1s;
+            line-height: 1.2;
+            margin-top: 0.1rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .topic-links a:hover {
+            background: #000000;
+            color: #ffc6a1;
+        }
+
+        /* split panel */
+        .split-panel {
+            display: flex;
+            gap: 2rem;
+            margin: 0rem 0 1.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .split-panel .text-col {
+            flex: 1 1 55%;
+        }
+
+        .table-col {
+            flex: 1 1 35%;
+            display: flex;
+            justify-content: center;
+            border: 1px solid #9281637e;
+            border-radius: 12px;
+        }
+
+        .wiki-info-table {
+            width: 100%;
+        }
+
+        .wiki-info-table td {
+            padding: 0.5rem 0.2rem;
+            background: #dfd6ca;
+            border-radius: 12px;
+            vertical-align: right;
+            text-align: center;
+        }
+
+        .wiki-info-table .image-cell {
+            text-align: center;
+            border: none;
+            background: none;
+            
+        }
+
+        .wiki-info-table2 {
+            width: 100%;
+            background: #f2eee9;
+            border-collapse: separate;
+            border-radius: 12px;   
+            overflow: hidden;
+        }
+
+        .wiki-info-table2 td {
+            padding: 0rem 0.2rem;
+            border: 1px solid #cbc2b2e1;
+            border-radius: 12px;
+            vertical-align: middle;
+            text-align: left;
+            padding-left: 0.5rem;
+        }
+
+        .table2-1 {
+            width: 25%;
+            overflow:hidden;
+        }
+
+        .wiki-info-table2 .image-cell {
+            text-align: center;
+        }
+
+        .table-image {
+            width: 100%;
+            min-height: 140px;
+            background: #8b7a62;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.3rem;
+            border: 2px solid #3a2e22;
+            overflow: hidden;
+        }
+
+        .table-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* collapsible sections */
+        .collapsible-section {
+            margin: 2.5rem 0;
+            border-left: 8px solid #ffbb33;
+            background: #fefcf8;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .section-toggle {
+            display: none;
+        }
+
+        .section-label {
+            display: block;
+            background: #ffeacc;
+            padding: 1rem 1.5rem;
+            font-family: 'Dela Gothic One', cursive;
+            font-size: 1.6rem;
+            cursor: pointer;
+            border-bottom: 2px solid #ffb347;
+            transition: 0.2s;
+        }
+
+        .section-label::after {
+            content: " o";
+            font-size: 1.2rem;
+            float: right;
+        }
+
+        .section-toggle:checked + .section-label::after {
+            content: " x";
+        }
+
+        .section-content {
+            padding: 1.5rem;
+            display: block;
+        }
+
+        .section-toggle:checked + .section-label + .section-content {
+            display: block;
+        }
+
+        .section-toggle:not(:checked) + .section-label + .section-content {
+            display: none;
+        }
+
+        .subsection {
+            margin-top: 1rem;
+        }
+
+        .subsection h4 {
+            font-family: 'Dela Gothic One', cursive;
+            font-size: 1.3rem;
+            letter-spacing: .067rem;
+            background: black;
+            color: white;
+            display: inline-block;
+            padding: 0.1rem 1rem;
+            border-radius: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* footer */
+        .wiki-footer {
+            background: #f5f0dc;
+            margin-top: 40px;
+            padding: 3rem 2rem 1.5rem;
+            border-top: 8px solid #dbb87c;
+            font-family: 'Space Grotesk';
+        }
+
+        .footer-columns {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-col h5 {
+            font-family: 'Dela Gothic One', cursive;
+            font-size: 1.2rem;
+            background: black;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 1px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin: 0.5rem 0;
+        }
+
+        .footer-col a {
+            color: #2e2e2e;
+            text-decoration: none;
+            border-bottom: 1px dotted #a58e6d;
+        }
+
+        .footer-attribution {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #ccb38b;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: 'Dela Gothic One';
+        }
+
+        /* ---------- MOBILE (centering) ---------- */
+        @media screen and (max-width: 1000px) {
+            .wiki-grid {
+                flex-direction: column;
+                padding: 0 1rem;
+            }
+            .toc-sidebar {
+                display: none;
+            }
+            .split-panel {
+                flex-direction: column;
+                align-items: center;
+            }
+            .split-panel .table-col {
+                width: 100%;
+                order: 2;
+            }
+            .wiki-content {
+                align-items: stretch;
+            }
+            .article-header {
+                text-align: center;
+            }
+            .sticky-header {
+                padding: 1rem 1rem;
+            }
+            .header-left {
+                gap: 0.6rem;
+            }
+            .title-subtitle h1 {
+                font-size: 1.6rem;
+            }
+            .header-shrink .title-subtitle h1 {
+                font-size: 1rem;
+            }
+            .image {
+                width: 45px;
+                height: 45px;
+            }
+            .header-shrink .image {
+                width: 35px;
+                height: 35px;
+            }
+            .header-links a {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            .sticky-header .header-links {
+                display: none;
+            }
+        }
+
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            font-family: 'Minecraft';
+            white-space: nowrap; /* changed from text-wrap */
+            font-size: 1.2rem;
+            
+            border-image-source: url('https://github.com/bluffcon/bluffcon.github.io/blob/main/tooltip_border.png?raw=true');
+            border-width: 3px;
+            image-rendering: pixelated;
+            border-style: solid;
+            border-image-slice: 3;
+            border-image-repeat: stretch;
+            border-image-width: 3;
+            
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+            animation: rock-smooth 1s none infinite;
+            
+            position: absolute;
+            z-index: 10;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 8px;
+            
+            padding: 0;
+            
+            background: transparent;
+        }
+
+        .tooltip .tooltiptext .tooltipbg {
+            background: #000000;
+            padding: 5px 15px;
+            margin: 3px;
+            display: block;
+            color: #fff;
+        }
+
+        .tooltip:hover .tooltiptext,
+        .tooltip:hover .tooltiptext::after {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @keyframes rock-smooth {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-2px);
+            }
+        }
+
+        .maintext {
+            color: #2b2b2b;
+            text-indent: 2em;
+            padding-bottom: 1rem;
+        }
+        .maintext b {
+            font-family: 'Dela Gothic One', cursive;
+        }
+        .maintext a {
+            color: #ff6600;
+            text-shadow: #ffc65d96 1px 0 5px;
+            text-decoration:none;
+        }
+        .maintext a:hover {
+            color: #ffffff;
+            text-shadow: none;
+            background: #000000;
+            padding: 1px 2px;
+            margin: -1px -2px;
+            border-radius: 2px;
+        }
+        .icon {
+            width:2rem; 
+            height:auto;
+            image-rendering: pixelated;
+        }
+        .mainimage {
+            width:auto; 
+            height:auto;
+            image-rendering: pixelated;
+        }
+        .articleimage {
+            width: 10vw;
+            height: auto;
+            min-width: 240px;
+            background: #b1b0af;
+            display: flex;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1.3rem;
+            border: 2px dashed #4b4744;
+            overflow: hidden;
+            image-rendering: pixelated;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.5rem;
+            margin-bottom: 0.8rem;
+            margin-left: 1vw;
+        }
+        .articleimage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+
+        .reference {
+            color: #3f3f3f94;
+            font-size: 0.8rem;
+        }
+
+
+
+        
