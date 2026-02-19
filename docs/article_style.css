@@ -180,7 +180,7 @@
         .toc-sidebar {
             flex: 0 0 240px;
             position: sticky;
-            top: 30vh;
+            top: 10vh;
             align-self: start;
             background: #f0efea;
             padding: 1.2rem 1rem;
