@@ -1,5 +1,5 @@
 const fuse = new Fuse(data, {
-  keys: ["title"],
+  keys: ["title", "desc"],
   threshold: 0.3,
   ignoreLocation: true,
   includeScore: false,
@@ -108,8 +108,16 @@ document.addEventListener('mousemove', (e) => {
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     
-    const moveX = x * 20;
-    const moveY = y * 10;
+	let moveX = 1
+	let moveY = 1
+
+	if (window.innerWidth < 1000) {
+		moveX = x * 42;
+    	moveY = y * 10;
+	} else {
+		moveX = x * 20;
+    	moveY = y * 10;
+	}
     
     top.style.setProperty('--mouse-x', `${moveX}px`);
     top.style.setProperty('--mouse-y', `${moveY}px`);
