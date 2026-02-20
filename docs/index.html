@@ -1,103 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Forestry:CE Wiki - Home</title>
-
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Forestry:CE Wiki - Home</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+				<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
 
-<h1>Forestry:CE Wiki</h1>
-<h4>Search a page down below</h4>
+	@font-face {
+        font-family: 'Minecraft';
+        src: url("Minecraft.otf") format('opentype')
+    }
 
-<input type="text" id="search" placeholder="Type to search titles..." autocomplete="off" />
+	.top {
+		height: 70vh;
+		width: 100vw;
+		display: grid;
+		grid-template-rows: auto auto;
+		place-content: center;
+		position: relative;
+		overflow: hidden;
+		place-items: center;
+	}
+	
+	.top::before {
+		content: "";
+		z-index: -1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: 
+			linear-gradient(-25deg, rgba(255, 218, 97, 0.205) 0%, rgba(255, 163, 57, 0.808) 100%),
+			url('cdn/banner.png') no-repeat center center / cover;
+		background-attachment: scroll;
+		background-blend-mode: screen;
+		transform: scale(1.1) translate(var(--mouse-x, 0px), var(--mouse-y, 0px));
+		filter: blur(4px) brightness(1.2);
+		box-shadow: 0 0 20px 10px #fff;
+		animation: pulse 120s ease-in-out infinite;
+		transition: transform 0.1s ease-out;
+	}
 
-<div id="results"></div>
+	@keyframes rotate {
+		0% {rotate: 0deg}
+		100% {rotate: 360deg;}
+	}
+	@keyframes rock {
+		0% {rotate: 0deg}
+		25% {rotate: 1deg;}
+		50% {rotate: 0deg;}
+		75% {rotate: -1deg;}
+		100% {rotate: 0deg}
+	}
+	@keyframes rockxy {
+		0% {translate: 0px 0px}
+		25% {translate: 0px 2px}
+		50% {translate: 0px 0px}
+		75% {translate: 0px -2px}
+		100% {translate: 0px 0px}
+	}
+	@keyframes rockx {
+		0% {translate: 0px 0px}
+		25% {translate: 10px 0px}
+		50% {translate: 0px 0px}
+		75% {translate: -10px 0px}
+		100% {translate: 0px 0px}
+	}
 
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
-<script src="pageindex.js"></script>
+	@keyframes pulseoutline {
+		0% {outline: 1px solid rgba(0, 0, 0, 0);}
+		50% {outline: 1px solid black;}
+		0% {outline: 1px solid rgba(0, 0, 0, 0);}
+	}
+	
 
-<script>
+	@keyframes pulse {
+		0% {
+			filter: blur(4px) brightness(1);
+			box-shadow: 0 0 20px 5px #fff;
+		}
+		10% {
+			filter: blur(0px) brightness(1.1);
+			box-shadow: 0 0 30px 15px #fff;
+		}
+		20% {
+			filter: blur(8px) brightness(1.3);
+			box-shadow: 0 0 40px 15px #fff;
+		}
+		30% {
+			filter: blur(0px) brightness(1);
+			box-shadow: 0 0 3px 15px #fff;
+		}
+		40% {
+			filter: blur(4px) brightness(1.2);
+			box-shadow: 0 0 10px 15px #fff;
+		}
+		49% {
+			filter: blur(0px) brightness(1.4);
+			box-shadow: 0 0 30px 5px #fff;
+		}
+		50% {
+			filter: blur(0px) brightness(2);
+			box-shadow: 0 0 30px 5px #fff;
+		}
+		52% {
+			filter: blur(1px) brightness(1.3);
+			box-shadow: 0 0 30px 5px #fff;
+		}
+		60% {
+			filter: blur(6px) brightness(1.22);
+			box-shadow: 0 0 20px 1px #fff;
+		}
+		70% {
+			filter: blur(8px) brightness(1.5);
+			box-shadow: 0 0 30px 15px #fff;
+		}
+		80% {
+			filter: blur(12px) brightness(1.3);
+			box-shadow: 0 0 30px 10px #fff;
+		}
+		90% {
+			filter: blur(6px) brightness(1.1);
+			box-shadow: 0 0 30px 15px #fff;
+		}
+		100% {
+			filter: blur(4px) brightness(1);
+			box-shadow: 0 0 20px 5px #fff;
+		}
+	}
 
-const fuse = new Fuse(data, {
-  keys: ["title"],
-  threshold: 0.3,
-  ignoreLocation: true,
-  includeScore: false,
-  shouldSort: true,
-});
+	.wikititle span {
+		font-family: 'Dela Gothic One', cursive;
+		font-size: 6.4rem;
+		background: linear-gradient(90deg, rgba(0, 0, 0, 0.836), rgba(0, 0, 0, 0.637));
+		color: white;
+		padding: 0.5rem 1.2rem;
+		padding-bottom:  0.6rem;
+		padding-top: 0rem;
+		border-radius: 2px;
+		white-space: nowrap;
+		text-align: center;
+	}
 
+	.wikititle img {
+		border-radius: 4px;
+		scale: 12;
+		image-rendering: pixelated;
+		rotate: 15deg;
+		margin-left: 3rem;
+		animation: rockxy 0.67s ease-in-out infinite;
+	}
 
+	.wikititle img:hover {
+		animation: rotate 0.67s linear infinite;
+	}
 
-const searchInput = document.getElementById("search");
-const resultsDiv  = document.getElementById("results");
+	.wikisubtitle {
+		font-family: var(--randfont), 'Windings';
+		font-size: 2.4rem;
+		background: linear-gradient(90deg, rgba(0, 0, 0, 0.329), rgba(0, 0, 0, 0.534));
+		color: white;
+		border-radius: 4px;
+		padding: 0.6rem 1.2rem;
+		display: inline-block;
+		margin-top:1rem;
+		text-align: center;
+	}
 
+	.searcharea {
+		border-top: 1rem solid;
+		border-image: linear-gradient(90deg, rgb(255, 238, 0), rgb(250, 121, 35)) 1;
+		border-image-slice: 1;
+	}
 
+	.searchcontent {
+		padding: 2rem;
+		text-align: center;
+	}
 
-function renderResults(items) {
-	resultsDiv.innerHTML = "";
+	.searchcontent input {
+		border: black;
+		border-width: 3px;
+		border-style: solid;
+		border-radius: 2px;
+		padding: 7px;
+		padding-left: 50px;
+		width: 35%;
 
-	if (items.length === 0) {
-		const msg = document.createElement("div");
-		msg.className = "no-results";
-		msg.textContent = "No matching links found.";
-		resultsDiv.appendChild(msg);
-		return;
+		text-align: left;
+		font-size: 2rem;
+		transition: scale 0.1s ease;
+		font-family: 'Minecraft';
+		transition: width 0.2s ease-in-out;
+
+		background-image: url('cdn/search.png');
+		background-size: 41px;
+		background-position: 5px center;
+		background-repeat: no-repeat;
+		image-rendering:optimizeQuality;
+	}
+
+	.searchcontent input:hover {
+		scale: 0.95;
+		transition: scale 0.1s ease;
+	}
+
+	.searchcontent input:focus {
+		outline: none;
+		animation: rock 0.67s step-end infinite;
+		width: 40%;
+		transition: width 0.2s ease-in-out;
+	}
+
+	.separator {
+	    border: none;
+		height: 1px;
+		background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.329) 20%, rgba(0, 0, 0, 0.329) 80%, transparent 100%);
+		width: 100%;
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+	}
+
+	.result-item {
+		border: 1px solid black;
+		width: 100%;
+		padding: 1rem;
+		border-radius: 15px;
+		background:  white;
+		transition: translate 0.2s ease-in-out, background 0.2s ease-in-out;
+	}
+	.result-item:hover {
+		translate: 0px -8px;
+		background: rgb(228, 227, 226);
+		transition: translate 0.2s ease-in-out, background 0.2s ease-in-out;
+	}
+	.result-item a {
+		font-size: 2rem;
+		font-family: 'Space Grotesk';
+		color: #ff6600;
+        text-shadow: #ffc65d96 1px 0 5px;
+        text-decoration:none;
+		padding: 0.2rem 0.6rem;
+	}
+	.result-item a:hover {
+		color: #ffffff;
+        text-shadow: none;
+        background: #000000;
+        padding: 1px 2px;
+        margin: -1px -2px;
+		text-decoration-line: underline;
+		border-radius: 2px;
+	}
+	.result-item p {
+		font-size: 1.2rem;
+		font-family: 'Segoe UI';
 	}
 
 
-	const fragment = document.createDocumentFragment();
+	.results {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 20px;
+		width: 100%;
+		grid-row: 3;
+		place-items: center;
+		margin-bottom: 35vh;
+	}
+
+	.results > :first-child:not(span) {
+		grid-column: span 4;
+		width: 55%;
+		min-height: 10vh;
+		border-radius: 10px;
+		padding-bottom: 2rem;
+		animation: pulseoutline 0.4s ease-in-out infinite;
+	}
+
+	.results > :first-child a {
+		font-size: 4rem;
+		font-family: 'Dela Gothic One';
+		color: black;
+		text-decoration: none;
+		padding: 0.2rem 1.6rem;
+		text-shadow: none;
+	}
+	.results > :first-child a:hover {
+		color: white;
+		background: black;
+		border-radius: 4px;
+	}
+	.results > :first-child p {
+		font-size: 2rem;
+		font-family: 'Space Grotesk';
+	}
+
+	.results span {
+		font-size: 3rem;
+		font-family: 'Segoe UI';
+		grid-column: span 4;
+		animation: rockx 1.5s linear infinite;
+		cursor: pointer;
+	}
 
 
-for (const item of items) {
-	const div = document.createElement("div");
-	div.className = "result-item";
-	
 
-	const a = document.createElement("a");
-	a.href = item.link;
-	a.target = "_blank";
-	a.rel = "noopener noreferrer";
-	a.textContent = item.title;
-	
+</style>
 
-	const p = document.createElement("p");
-	p.className = "description";
-	p.textContent = item.desc;
-	
+<main class="maincontent">
+	<div class="top">
+		<div class="wikititle">
+			<span>Forestry: CE Wiki</span>
+			<img src="cdn/logo.png">
+		</div>
+		<div class="wikisubtitle">
+			<span>The Community Wiki</span>
+		</div>
+	</div>
+	<div class="searcharea">
+		<div class="searchcontent" id="searchcontent">
+		<input type="text" id="search" placeholder="Type to search pages..." autocomplete="off" />
+		<hr class="separator">
+			<grid id="results" class="results"></grid>
+		</div>
+	</div>
+</main>
 
-	div.appendChild(a);
-	div.appendChild(p);
-	
-
-	fragment.appendChild(div);
-}
-
-resultsDiv.appendChild(fragment);
-}
-
-
-
-function searching() {
-  const query = searchInput.value.trim();
-
-  if (query.length === 0) {
-    renderResults(data);
-    return;
-  }
-
-  const result = fuse.search(query);
-  const matches = result.map(r => r.item);
-
-  renderResults(matches);
-}
-
-searchInput.addEventListener("input", searching);
-
-
-renderResults(data);
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+<script src="pageindex.js"></script>
+<script src="mainpage.js"></script>
 </body>
 </html>
