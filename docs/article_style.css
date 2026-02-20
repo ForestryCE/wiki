@@ -402,13 +402,13 @@
         }
 
         .section-label::after {
-            content: " o";
+            content: " ⯩";
             font-size: 1.2rem;
             float: right;
         }
 
         .section-toggle:checked + .section-label::after {
-            content: " x";
+            content: " ⯫";
         }
 
         .section-content {

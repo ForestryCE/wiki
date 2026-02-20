@@ -1,6 +1,103 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Forestry: CE Wiki</title>
-	</head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forestry:CE Wiki - Home</title>
+
+</head>
+<body>
+
+<h1>Forestry:CE Wiki</h1>
+<h4>Search a page down below</h4>
+
+<input type="text" id="search" placeholder="Type to search titles..." autocomplete="off" />
+
+<div id="results"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+<script src="pageindex.js"></script>
+
+<script>
+
+const fuse = new Fuse(data, {
+  keys: ["title"],
+  threshold: 0.3,
+  ignoreLocation: true,
+  includeScore: false,
+  shouldSort: true,
+});
+
+
+
+const searchInput = document.getElementById("search");
+const resultsDiv  = document.getElementById("results");
+
+
+
+function renderResults(items) {
+	resultsDiv.innerHTML = "";
+
+	if (items.length === 0) {
+		const msg = document.createElement("div");
+		msg.className = "no-results";
+		msg.textContent = "No matching links found.";
+		resultsDiv.appendChild(msg);
+		return;
+	}
+
+
+	const fragment = document.createDocumentFragment();
+
+
+for (const item of items) {
+	const div = document.createElement("div");
+	div.className = "result-item";
+	
+
+	const a = document.createElement("a");
+	a.href = item.link;
+	a.target = "_blank";
+	a.rel = "noopener noreferrer";
+	a.textContent = item.title;
+	
+
+	const p = document.createElement("p");
+	p.className = "description";
+	p.textContent = item.desc;
+	
+
+	div.appendChild(a);
+	div.appendChild(p);
+	
+
+	fragment.appendChild(div);
+}
+
+resultsDiv.appendChild(fragment);
+}
+
+
+
+function searching() {
+  const query = searchInput.value.trim();
+
+  if (query.length === 0) {
+    renderResults(data);
+    return;
+  }
+
+  const result = fuse.search(query);
+  const matches = result.map(r => r.item);
+
+  renderResults(matches);
+}
+
+searchInput.addEventListener("input", searching);
+
+
+renderResults(data);
+</script>
+
+</body>
 </html>
