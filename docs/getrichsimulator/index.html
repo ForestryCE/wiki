@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<style>
+    .coin {
+        width: 80px; 
+        height: 80px;
+        image-rendering: pixelated;
+    }
+
+    .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .image:hover {
+        cursor: pointer;
+    }
+
+    .image img {
+        width: 80px; 
+        height: 160px;
+        image-rendering: pixelated;
+    }
+
+    .all {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 2rem;
+    }
+    h2 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1rem;
+    }
+
+    body {
+        margin: 0;
+        overflow: hidden;
+    }
+</style>
+
+<body> 
+    <div class="all">
+        <div class="image" onclick="openchest()" id="chest"><img src="../cdn/chest.png"></div>
+            <h1 id="text">Get rich simulator. Click for reward</h1>
+            <h2 class="coincount" id="coincount"></h2>
+    </div>
+</body>
+
+<script>
+
+function createCoin(x, y) {
+    const coin = document.createElement('div');
+    
+
+    coin.style.position = 'fixed';
+    coin.style.left = x + 'px';
+    coin.style.top = y + 'px';
+    coin.style.zIndex = '9999';
+    coin.style.pointerEvents = 'none';
+    coin.innerHTML = `<img src="../cdn/coin.png" class="coin">`;
+
+    return coin;
+}
+
+
+function getRandomPath() {
+    return {
+        rise: -200 - Math.random() * 100,
+        right: 300 - Math.random() * 600,
+    };
+}
+
+function animateCoin(coin, startX, startY, duration = 1000) {
+    const path = getRandomPath();
+    const startTime = performance.now();
+    
+    function updateAnimation(currentTime) {
+
+        const elapsed = currentTime - startTime;
+        let progress = elapsed / duration;
+        
+        if (progress >= 2) {
+        coin.remove();
+        return;
+        }
+        
+
+        let yOffset;
+        if (progress < 0.2) {
+        const upProgress = progress / 0.2;
+        yOffset = path.rise * upProgress;
+        } else {
+
+        const downProgress = (progress - 0.2) / 0.4;
+        
+        yOffset = path.rise + (Math.abs(path.rise) * 0.8) * (downProgress * downProgress);
+        }
+        
+        const xOffset = path.right * progress;
+        let opacity = 1;
+        if (progress > 0.6) {
+
+        const fadeProgress = (progress - 0.6) / 1;
+        opacity = 1 - fadeProgress;
+        }
+        
+        coin.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+        coin.style.opacity = opacity;
+        
+        requestAnimationFrame(updateAnimation);
+    }
+    
+    requestAnimationFrame(updateAnimation);
+}
+
+
+function spawnCoins(count = 10, startX, startY) {
+    for (let i = 0; i < count; i++) {
+
+        setTimeout(() => {
+        const coin = createCoin(startX, startY);
+        document.body.appendChild(coin);
+        animateCoin(coin, startX, startY);
+        }, i * 15);
+    }
+}
+
+
+const coincount = document.getElementById("coincount");
+const chest = document.getElementById("chest");
+
+const message = document.getElementById("text");
+const STORAGE_KEY = 'lastExecution';
+const TWELVE_HOURS = 12 * 60 * 60 * 1000;
+let timerready = false
+
+let coins = localStorage.getItem('coinCount');
+if (coins == null) { 
+    coins = 0;
+    localStorage.setItem('coinCount', '0');
+} else {
+    coins = parseInt(coins);
+}
+coincount.innerText = "You have " + coins + " coins";
+
+
+function executeWithCooldown(callback) {
+    const lastExec = localStorage.getItem(STORAGE_KEY);
+    const now = Date.now();
+    
+    if (!lastExec || (now - parseInt(lastExec)) >= TWELVE_HOURS) {
+        localStorage.setItem(STORAGE_KEY, now.toString());
+        callback();
+        return true;
+    } else {
+        const hoursLeft = Math.ceil((TWELVE_HOURS - (now - parseInt(lastExec))) / (60 * 60 * 1000));
+        message.innerText = 'Too soon! Try again in ' + hoursLeft + ' hours';
+        return false;
+    }
+}
+
+function openchest() {
+    if (executeWithCooldown(() => {
+        spawnCoins(10, window.innerWidth/2 - 20, window.innerHeight/2 - 45);
+        chest.innerHTML = `<img src="../cdn/chestopen.png">`
+
+        coins = coins + Math.floor(10 * Math.random());
+        localStorage.setItem('coinCount', coins);
+
+        coincount.innerText = "You have " + coins + " coins"
+    })) {
+    }
+}
+
+
+</script>
