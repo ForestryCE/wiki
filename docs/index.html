@@ -372,10 +372,23 @@
 			width: 95%;
 		}
 
-		.results > :first-child:not(span) {
-		grid-column: span 2;
-		width: 100%;
+
+		.results {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 15px;
+			width: 100%;
+			grid-row: 3;
+			place-items: center;
+			margin-bottom: 35vh;
 		}
+
+		.results > :first-child:not(span) {
+			grid-column: 1;
+			width: 100%;
+			max-width: 100%;
+		}
+
 		.results > :first-child h4 {
 			font-size: 2rem;
 			font-family: 'Dela Gothic One';
@@ -384,21 +397,42 @@
 			padding: 0.2rem 1.6rem;
 			text-shadow: none;
 		}
+
 		.results > :first-child p {
 			font-size: 1.4rem;
 		}
 
-		.results {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 10px;
-		}
 
+		.result-item {
+			width: 100%;
+			max-width: 100%;
+			padding: 1rem;
+			box-sizing: border-box;
+			margin-bottom: 0.5rem;
+		}
 
 		.result-item h4 {
 			font-size: 1.4rem;
+			white-space: normal;
+			word-wrap: break-word;
+			max-width: 100%;
 		}
+
 		.result-item p {
 			font-size: 1rem;
+			white-space: normal;
+			word-wrap: break-word;
+			overflow: visible;
+		}
+
+		.results span {
+			font-size: 2rem;
+			grid-column: 1;
+			text-align: center;
+			animation: rockx 1.5s linear infinite;
+			cursor: pointer;
+			width: 100%;
+			word-wrap: break-word;
 		}
 	}
 
