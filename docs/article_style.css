@@ -320,6 +320,14 @@
             vertical-align: right;
             text-align: center;
         }
+        .wiki-info-table a {
+            color: rgb(122, 74, 42);
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .wiki-info-table a:hover {
+            color: rgb(194, 96, 30);
+        }
 
         .wiki-info-table .image-cell {
             text-align: center;
@@ -556,11 +564,11 @@
             white-space: nowrap; /* changed from text-wrap */
             font-size: 1.2rem;
             
-            border-image-source: url('https://github.com/bluffcon/bluffcon.github.io/blob/main/tooltip_border.png?raw=true');
+            border-image-source: url('cdn/tooltip_border.png');
             border-width: 3px;
             image-rendering: pixelated;
             border-style: solid;
-            border-image-slice: 3;
+            border-image-slice: 3 fill;
             border-image-repeat: stretch;
             border-image-width: 3;
             
@@ -582,7 +590,6 @@
         }
 
         .tooltip .tooltiptext .tooltipbg {
-            background: #000000;
             padding: 5px 15px;
             margin: 3px;
             display: block;
