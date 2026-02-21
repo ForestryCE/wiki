@@ -15,7 +15,7 @@ function random(arr) {
 }
 
 
-const subtitlefonts = ['Dela Gothic One', 'Space Grotesk', 'Consolas', 'Impact', 'Comic Sans MS', 'Ink Free', 'Minecraft', 'Brush Script MT', 'Segoe Script', 'Verdana', 'Webdings']
+const subtitlefonts = ['Dela Gothic One', 'Space Grotesk', 'Consolas', 'Impact', 'Comic Sans MS', 'Ink Free', 'Minecraft', 'Brush Script MT', 'Segoe Script', 'Verdana', 'Webdings', 'Goldman', 'DynaPuff']
 
 function subtitle() {
 	const subtitlefont = random(subtitlefonts)
@@ -52,13 +52,18 @@ function renderResults(items) {
 
 // make doms
 for (const item of items) {
+	const biga = document.createElement("a");
 	const div = document.createElement("div");
 	div.className = "result-item";
+	biga.className = "result-item-biga";
 	
 
-	const a = document.createElement("a");
-	a.href = item.link;
-	a.rel = "noopener noreferrer";
+	const a = document.createElement("h4");
+	biga.href = item.link;
+	biga.rel = "noopener noreferrer";
+	biga.draggable = false
+	a.draggable = false
+	
 	a.textContent = item.title;
 	
 
@@ -69,9 +74,10 @@ for (const item of items) {
 
 	div.appendChild(a);
 	div.appendChild(p);
+	biga.appendChild(div);
 	
 
-	fragment.appendChild(div);
+	fragment.appendChild(biga);
 }
 
 resultsDiv.appendChild(fragment);

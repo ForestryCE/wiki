@@ -7,6 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 				<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+				<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Goldman:wght@400;700&display=swap" rel="stylesheet">
 		<meta property="og:title" content="Forestry:CE Wiki">
         <meta property="og:description" content="A Wiki all about the modern Minecraft mod - Forestry: Community Edition! Become an engineer and a beekeeper, breed 60+ bee species and grow 20+ new trees, all in this technological Forge mod!">
         <meta property="og:url" content="https://forestryce.github.io/wiki/">
@@ -244,21 +245,36 @@
 		border-radius: 15px;
 		background:  white;
 		transition: translate 0.2s ease-in-out, background 0.2s ease-in-out;
+		color: black;
+		text-align: center;
+		min-width: 0;
+		max-width: 100%;
+		overflow: hidden;
+	}
+	.result-item-biga {
+		text-decoration: none !important;
+		margin-bottom: 0px;
+		padding: 0px;
+		width: 100%;
+		height: 100%;
 	}
 	.result-item:hover {
 		translate: 0px -8px;
 		background: rgb(228, 227, 226);
 		transition: translate 0.2s ease-in-out, background 0.2s ease-in-out;
 	}
-	.result-item a {
+	.result-item h4 {
 		font-size: 2rem;
 		font-family: 'Space Grotesk';
 		color: #ff6600;
         text-shadow: #ffc65d96 1px 0 5px;
         text-decoration:none;
 		padding: 0.2rem 0.6rem;
+		width: max-content;
+		margin: 0 auto;
+		text-align: center;
 	}
-	.result-item a:hover {
+	.result-item h4:hover {
 		color: #ffffff;
         text-shadow: none;
         background: #000000;
@@ -266,34 +282,45 @@
         margin: -1px -2px;
 		text-decoration-line: underline;
 		border-radius: 2px;
+		padding: 0.2rem 0.6rem;
+		width: max-content;
+		margin: 0 auto;
+		text-align: center;
 	}
 	.result-item p {
 		font-size: 1.2rem;
 		font-family: 'Segoe UI';
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 100%;
+		width: 100%;
 	}
 
 
 	.results {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(4, minmax(0, 1fr));
 		gap: 20px;
 		width: 100%;
 		grid-row: 3;
 		place-items: center;
 		margin-bottom: 35vh;
-		margin-bottom: 35vh;
+		
 	}
 
 	.results > :first-child:not(span) {
 		grid-column: span 4;
 		width: 55%;
 		min-height: 10vh;
-		border-radius: 10px;
-		padding-bottom: 2rem;
+		border-radius: 16px;
+		background: black;
+	}
+	.results > :first-child div {
 		animation: pulseoutline 0.4s ease-in-out infinite;
 	}
 
-	.results > :first-child a {
+	.results > :first-child h4 {
 		font-size: 4rem;
 		font-family: 'Dela Gothic One';
 		color: black;
@@ -301,7 +328,7 @@
 		padding: 0.2rem 1.6rem;
 		text-shadow: none;
 	}
-	.results > :first-child a:hover {
+	.results > :first-child h4:hover {
 		color: white;
 		background: black;
 		border-radius: 4px;
@@ -349,7 +376,7 @@
 		grid-column: span 2;
 		width: 100%;
 		}
-		.results > :first-child a {
+		.results > :first-child h4 {
 			font-size: 2rem;
 			font-family: 'Dela Gothic One';
 			color: black;
@@ -367,7 +394,7 @@
 		}
 
 
-		.result-item a {
+		.result-item h4 {
 			font-size: 1.4rem;
 		}
 		.result-item p {
