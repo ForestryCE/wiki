@@ -14,7 +14,7 @@
             `
     document.getElementById("mainHeader").innerHTML = `<div class="header-left">
                 <div class="image">
-                    <img src="https://github.com/bluffcon/bluffcon.github.io/blob/main/forestrywikiicon.png?raw=true" alt="logo" class="logo">
+                    <a href="https://forestryce.github.io/wiki/"><img src="https://github.com/bluffcon/bluffcon.github.io/blob/main/forestrywikiicon.png?raw=true" alt="logo" class="logo"></a>
                   </div>
                     <div class="title-subtitle">
                     <h1>FORESTRY: CE Wiki</h1>
