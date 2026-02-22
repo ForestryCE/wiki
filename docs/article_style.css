@@ -711,12 +711,34 @@
         AM A REDDITOR
         TOOOOOOOOOOOOOOOOOOOOOOOOOOOO */
 
+        .minecraft-item {
+            max-width: 48px;
+            max-height: 48px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            place-items: center;
+            padding-top: 6px;
+        }
+        .minecraft-item img {
+            scale: 1.45;
+        }
+        .minecraft-item:hover {
+            background: rgba(211, 211, 211, 0.438);
+        }
+
+
+
+
+
 
     .centrifuge-grid {
         width: 366px;
         height: 225px;
         image-rendering: pixelated;
-        background-image: url('Centrifuge/gui_small.png');
+        background-image: url('crafting/centrifuge.png');
         background-size: 100% 100%;
         
         display: grid;
@@ -734,21 +756,8 @@
         place-items: center;
         align-items: center;
         justify-content: center;
-        padding-top: 6px;
         translate: -32px 10px;
     }
-    .centrifuge-grid-input-item {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        place-items: center;
-    }
-    .centrifuge-grid-input-item img {
-        scale: 1.3;
-    }
-
     .centrifuge-grid-output {
         width: 156px;
         height: 156px;
@@ -759,14 +768,39 @@
         translate: -12px 10px;
     }
 
-    .centrifuge-grid-output-item {
-        width: 100%;
-        height: 100%;
+
+
+
+    .crafting-grid {
+        width: 390px;
+        height: 204px;
+        image-rendering: pixelated;
+        background-image: url('crafting/crafting.png');
+        background-size: 100% 100%;
+        
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        place-items: center;
+
+        overflow: visible;
+        margin: 1rem 1rem;
+    }
+    .crafting-grid-output {
+        width: 48px;
+        height: 48px;
         display: flex;
+        place-items: center;
         align-items: center;
         justify-content: center;
-        place-items: center;
+        translate: 36px 0px;
     }
-    .centrifuge-grid-output-item img {
-        scale: 1.3;
+    .crafting-grid-input {
+        width: 156px;
+        height: 156px;
+        display: grid;
+        gap: 3px;
+        grid-template-columns: repeat(3, 1fr);;
+        grid-template-rows: repeat(3, 1fr);;
+        translate: 4px 0px;
     }
