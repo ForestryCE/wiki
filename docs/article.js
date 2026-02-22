@@ -182,7 +182,7 @@
             const footercontent = document.getElementById("footer").innerHTML
             document.getElementById("footer").innerHTML = `<div class="footer-columns">
             <div class="footer-col">
-                <h5>foresty ce</h5>
+                <h5>forestry ce</h5>
                 <ul>
                     <li><a href="https://modrinth.com/mod/forestry-community-edition">Modrinth</a></li>
                     <li><a href="https://www.curseforge.com/minecraft/mc-mods/forestry-community-edition">CurseForge</a></li>

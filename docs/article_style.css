@@ -390,7 +390,7 @@
             background: #fefcf8;
             border-radius: 20px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.04);
-            overflow: hidden;
+            overflow: visible;
             width: 100%;
         }
 
@@ -553,6 +553,15 @@
             }
         }
 
+        .section-content a {
+            color: #ff6600;
+            text-shadow: #ffc65d96 1px 0 5px;
+            text-decoration:none;
+        }
+        .section-content a:hover {
+            color: #ffbc57;
+            text-shadow: none;
+        }
 
         .tooltip {
             position: relative;
@@ -643,15 +652,14 @@
             image-rendering: pixelated;
         }
         .articleimage {
-            width: 10vw;
+            width: 90%;
             height: auto;
             min-width: 240px;
-            background: #b1b0af;
             display: flex;
-            border-radius: 16px;
+            
             font-weight: 600;
             font-size: 1.3rem;
-            border: 2px dashed #4b4744;
+            
             overflow: hidden;
             image-rendering: pixelated;
             align-items: center;
@@ -661,10 +669,13 @@
             margin-left: 1vw;
         }
         .articleimage img {
-            width: 100%;
-            height: 100%;
+            width: 90%;
+            height: 90%;
             object-fit: cover;
             display: block;
+            border: 2px dotted #4b47445b;
+            background: #b1b0af3a;
+            border-radius: 16px;
         }
 
 
@@ -676,3 +687,86 @@
 
 
         
+
+
+
+
+
+
+
+
+
+
+
+
+    /* ABOUT THE TIME WE TAKE A STAND
+        SO I SAY
+        LETS GET DOWN TO BUSINESS
+        AND CONSUME THE SOY
+        BRUSH THE STACIES OFF NOW
+        OUR OMORIIIIIIIBOY
+        ALL THESE WOMEN NEVER TREAT ME RIGHT
+        AND THEY HAVENT GOT A CLUE
+        BECAUSE I
+        AM A REDDITOR
+        TOOOOOOOOOOOOOOOOOOOOOOOOOOOO */
+
+
+    .centrifuge-grid {
+        width: 366px;
+        height: 225px;
+        image-rendering: pixelated;
+        background-image: url('Centrifuge/gui_small.png');
+        background-size: 100% 100%;
+        
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        place-items: center;
+
+        overflow: visible;
+        margin: 1rem 1rem;
+    }
+    .centrifuge-grid-input {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        place-items: center;
+        align-items: center;
+        justify-content: center;
+        padding-top: 6px;
+        translate: -32px 10px;
+    }
+    .centrifuge-grid-input-item {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        place-items: center;
+    }
+    .centrifuge-grid-input-item img {
+        scale: 1.3;
+    }
+
+    .centrifuge-grid-output {
+        width: 156px;
+        height: 156px;
+        display: grid;
+        gap: 3px;
+        grid-template-columns: repeat(3, 1fr);;
+        grid-template-rows: repeat(3, 1fr);;
+        translate: -12px 10px;
+    }
+
+    .centrifuge-grid-output-item {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        place-items: center;
+    }
+    .centrifuge-grid-output-item img {
+        scale: 1.3;
+    }
