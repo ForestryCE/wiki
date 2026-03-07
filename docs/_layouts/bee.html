@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head id="head">
+    <meta property="og:site_name" content="Forestry: Community Edition - Wiki">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.og_description }}">
+    <meta property="og:url" content="{{ page.og_url }}">
+    <meta property="og:image" content="{{ page.og_image }}">
+    <meta name="theme-color" content="{{ page.theme_color | default: '#f3a90a' }}" data-react-helmet="true" />
+    {% if page.icon %}<link rel="icon" href="{{ page.icon | relative_url }}">{% endif %}
+    <link rel="stylesheet" href="{{ '/article_style.css' | relative_url }}">
+</head>
+<body>
+    <header class="sticky-header" id="mainHeader"></header>
+
+    <div class="wiki-grid">
+        <aside class="toc-sidebar">
+            <h3>{{ page.title }}</h3>
+            <ul class="toc-list" id="dynamic-toc"></ul>
+        </aside>
+
+        <main class="wiki-content">
+            <div class="article-header">
+                <h2 style="text-transform:uppercase" id="articletitle">{{ page.title }}</h2>
+                {% if page.similar %}
+                <div class="topic-links">
+                    <span>similar:</span>
+                    {% for item in page.similar %}
+                    <a href="{{ item.href }}">{{ item.name }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="split-panel">
+                <div class="text-col">
+                    {{ page.intro }}
+                    {% if page.article_image %}
+                    <div class="articleimage"><img src="{{ page.article_image | relative_url }}"></div>
+                    {% endif %}
+                </div>
+                <div class="table-col">
+                    <table class="wiki-info-table">
+                        <tr>
+                            <td colspan="2" class="image-cell">
+                                <div class="table-image">
+                                    <img src="{{ page.bee_image | relative_url }}" alt="{{ page.title }}" class="mainimage" id="mainimage">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="{{ '/Taxonomy' | relative_url }}">Family</a></td>
+                            <td>Bees</td>
+                        </tr>
+                        {% if page.products %}
+                        <tr>
+                            <td><a href="{{ '/Bee+Products' | relative_url }}">Products</a></td>
+                            <td>
+                                {% for product in page.products %}
+                                <div class="tooltip">
+                                    <a href="{{ product.href | relative_url }}">
+                                        <img src="{{ product.icon | relative_url }}" class="icon">
+                                    </a>
+                                    <span class="tooltiptext">
+                                        <span class="tooltipbg">{{ product.name }}</span>
+                                    </span>
+                                </div>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td><a href="{{ '/Flower+Type' | relative_url }}">Flowers</a></td>
+                            <td>{{ page.flowers }}</td>
+                        </tr>
+                        <tr>
+                            <td><a href="{{ '/Bee+Effect' | relative_url }}">Bee Effect</a></td>
+                            <td>{{ page.bee_effect | default: 'None' }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Authority</b></td>
+                            <td>{{ page.authority }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            {{ content }}
+
+        </main>
+    </div>
+
+    <footer class="wiki-footer" id="footer">
+        {% if page.page_author %}
+        <div class="footer-attribution">
+            original page author · {{ page.page_author }}
+        </div>
+        {% endif %}
+    </footer>
+    <script src="{{ '/article.js' | relative_url }}"></script>
+</body>
+</html>
