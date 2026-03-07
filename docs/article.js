@@ -207,7 +207,5 @@
         </div>
         ` + footercontent
             
-
-
         
         })();

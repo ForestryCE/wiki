@@ -683,8 +683,35 @@
             color: #3f3f3f94;
             font-size: 0.8rem;
         }
-
-
+        .warning-panel {
+            display: grid;
+            grid-template-columns: 12% 90%;
+            gap: 10px;
+            width: 100%;
+            background: rgb(255, 218, 150);
+            background-repeat: repeat;
+            background-size: 7rem;
+            background-blend-mode: multiply;
+            padding: 0.6rem;
+            border-bottom: 1rem solid rgb(233, 138, 75);
+            outline: 2px solid rgb(233, 138, 75);
+            border-radius: 10px;
+            margin-bottom: 0.8rem;
+            color: rgb(0, 0, 0);
+            font-size: 0.8rem;
+            line-height: 1.2rem;
+            font-family: 'Dela Gothic One';
+            overflow: hidden;
+        }
+        .warning-panel a {
+            color:orangered;
+            text-decoration: none;
+        }
+        .warning-panel img {
+            width: 100%;
+            height: auto;
+            image-rendering: pixelated;
+        }
 
         
 
@@ -721,7 +748,6 @@
             justify-content: center;
             place-items: center;
             padding-top: 6px;
-            
         }
         .minecraft-item img {
             scale: 1.5;
@@ -771,7 +797,7 @@
         width: 156px;
         height: 156px;
         display: grid;
-        gap: 3px;
+        gap: 6px;
         grid-template-columns: repeat(3, 1fr);;
         grid-template-rows: repeat(3, 1fr);;
         translate: -12px 10px;
@@ -808,7 +834,7 @@
         width: 156px;
         height: 156px;
         display: grid;
-        gap: 3px;
+        gap: 6px;
         grid-template-columns: repeat(3, 1fr);;
         grid-template-rows: repeat(3, 1fr);;
         translate: 4px 0px;
