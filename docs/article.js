@@ -22,8 +22,8 @@
                   </div>
             </div>
                 <div class="header-links">
-                <a href="https://bluffcon.github.io/forestrycediscord.html">Discord</a>
-                <a href="https://bluffcon.github.io/forestrycediscord.html">Get Forestry</a>
+                <a href="https://https://forestryce.github.io/wiki/discord/">Discord</a>
+                <a href="https://modrinth.com/mod/forestry-community-edition/">Get Forestry</a>
               </div>`
 
 
