@@ -53,7 +53,7 @@ doc. The implementation plan will sequence them (§9).
 ```
 ┌─ MOD (Java) ──────────┐   ┌─ WIKI repo (Node) ───────────┐   ┌─ Jekyll build (Ruby) ─────┐
 │ /forestry dump        │   │ npm run sync-bees <dump.json>│   │ _layouts/bee.html joins:  │
-│  bee_species          │──▶│  • derive wiki-shaped data   │──▶│  site.data.bees[id]       │
+│  wiki_bees            │──▶│  • derive wiki-shaped data   │──▶│  site.data.bees[id]       │
 │ writes RAW truth:     │   │  • write _data/bees.json     │   │  + _data/items.yml        │
 │  bees.json            │   │  • create missing _bees/*.md │   │  + {{ content }} (human)  │
 │ (species+hives+muts)  │   │  • report new/unmapped       │   │ → static HTML             │
@@ -105,7 +105,7 @@ Flat, ID-keyed facts plus a provenance manifest. The mod does **not** invert or 
         "flower_type":           { "value": "...",   "display": "Flowers",          "allele_id": "...",                         "dominant": false },
         "effect":                { "value": "...",   "display": "None",             "allele_id": "...",                         "dominant": false },
         "pollination":           { "value": 10,      "display": "Slower",           "allele_id": "...",                         "dominant": false }
-        /* all 13 non-species chromosomes; each carries raw value + display + allele_id + dominant */
+        /* all 12 non-species chromosomes; each carries raw value + display + allele_id + dominant */
       },
       "products":    [ { "item": "forestry:honey_comb", "chance": 0.30, "display": "Honey Comb" } ],
       "specialties": [],
@@ -211,13 +211,20 @@ placeholder icon, and the sync script **reports** them so editors know what art 
 
 ### 6.1 Mod command (workstream A)
 
-- **Replace the stubbed `forestry/core/commands/AllDataDump.java`.** Current bugs: `begin()` builds a
-  stream but never collects or writes; the genome `JsonArray` is built but never attached to the
-  output. The princess-chance math (`computePrincessChances`) is kept and reused.
-- **Wire into `DumpCommand`**, which already has a placeholder `bee_species` literal.
-- **Command:** `/forestry dump bee_species`, permission level 2 (admin), writes pretty-printed JSON to
+- **Complete and repurpose the WIP `forestry/core/commands/AllDataDump.java`.** This file is
+  currently **staged-but-uncommitted and unreferenced** (not wired into any command) — distinct from
+  the shipping `DumpCommand`. Current bugs to fix: `begin()` builds a lazy `.map()` stream with no
+  terminal op, so nothing is written; the genome `JsonArray` is built but never attached to the
+  output. The princess-chance math (`computePrincessChances`) is kept and reused. It becomes the
+  implementation behind the new command below.
+- **Add a NEW subcommand under `DumpCommand`** — do **not** overload the existing `bee_species`
+  literal, which is already a fully implemented command that iterates species and logs stats to the
+  logger. Repurposing it would change shipping behavior.
+- **Command:** `/forestry dump wiki_bees`, permission level 2 (admin), writes pretty-printed JSON to
   `config/forestry/wiki/bees.json`, and replies in chat with species/hive/mutation counts (and a
-  warning if unresolved translation keys are detected — see §7).
+  warning if unresolved translation keys are detected — see §7). (Named `wiki_bees` rather than
+  `bee_species` to avoid colliding with the existing stats command, and to leave room for future
+  `wiki_trees`/`wiki_butterflies` dumps.)
 - **Three extractors**, all over public APIs:
   - **Species** — `SpeciesUtil.getAllBeeSpecies()`; genome via
     `species.getKaryotype().getChromosomes()` filtered against `getSpeciesChromosome()`, reading both
@@ -235,8 +242,14 @@ placeholder icon, and the sync script **reports** them so editors know what art 
 
 ### 6.2 Jekyll foundation (workstream B)
 
-- Build on the started `try-use-jekyll` branch: `_config.yml`, `Gemfile` (Jekyll 4.x), a `bees`
-  collection.
+- **Reuse what the `try-use-jekyll` branch already has** (verified): `docs/_config.yml`,
+  `docs/Gemfile` (Jekyll 4.4), and a prototype `bee` *layout* that pages opt into via
+  `layout: bee` front matter.
+- **The `bees` collection is net-new.** That branch has **no `collections:` key and no `_bees/`
+  directory** — it models bees as a per-page layout, not a collection. This design needs a real
+  `bees` collection (`_bees/<id>.md` → `site.bees`), so the planner must: add the `collections:` key
+  to `_config.yml`, create `_bees/`, and reconcile the prototype's layout-only approach into the
+  collection model (the prototype `bee` layout is a useful starting point for `_layouts/bee.html`).
 - **Deploy via GitHub Actions** (`actions/jekyll-build-pages` + `actions/deploy-pages`), since
   Jekyll 4.x + custom layouts cannot use the legacy "serve `docs/`" Pages build.
 - **Jekyll source stays in `docs/`** to preserve existing directory structure and relative asset paths
@@ -262,6 +275,9 @@ placeholder icon, and the sync script **reports** them so editors know what art 
   reads the raw dump, derives `_data/bees.json` (§4.2), creates missing `_bees/<id>.md` stubs (never
   overwriting existing), and prints a report (new species, unmapped items, secret species). Idempotent.
   A GitHub Actions wrapper around the same script is a later addition (per chosen rollout).
+  **Bootstrap note:** the wiki repo currently has no `package.json` and no `scripts/` directory, so
+  the plan's first C-step is initializing Node tooling (`package.json` with the `sync-bees` script
+  and a test runner for §8's sync-script tests).
 - **Search index** — a Liquid template generates `search.json` from `site.pages` + `site.bees` at
   build, replacing the hand-maintained `pageindex.js`, so every bee auto-appears in search.
 
@@ -290,7 +306,8 @@ placeholder icon, and the sync script **reports** them so editors know what art 
 ## 8. Testing
 
 - **Mod (A):** a gametest/integration test that runs the dump and asserts: JSON parses; every species
-  has all 13 non-species chromosomes; every `chance`/`princess_chance` ∈ [0,1]; every mutation
+  has all 12 non-species chromosomes present (assert against the karyotype's non-species chromosome
+  set, not a hard-coded count); every `chance`/`princess_chance` ∈ [0,1]; every mutation
   parent/result id resolves to a dumped species.
 - **Sync script (C):** unit tests over a fixture dump — derivation correctness (hive inversion,
   mutation into/from, princess passthrough), stub creation only for missing files, **never**
