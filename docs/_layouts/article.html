@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head id="head">
+    <meta property="og:site_name" content="Forestry: Community Edition - Wiki">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.og_description }}">
+    <meta property="og:url" content="{{ page.og_url }}">
+    <meta property="og:image" content="{{ page.og_image }}">
+    <meta name="theme-color" content="{{ page.theme_color | default: '#f3a90a' }}" data-react-helmet="true" />
+    <link rel="stylesheet" href="{{ '/article_style.css' | relative_url }}">
+</head>
+<body>
+    <header class="sticky-header" id="mainHeader"></header>
+
+    <div class="wiki-grid">
+        <aside class="toc-sidebar">
+            <h3>Contents</h3>
+            <ul class="toc-list" id="dynamic-toc"></ul>
+        </aside>
+
+        <main class="wiki-content">
+            <div class="article-header">
+                <h2 style="text-transform:uppercase" id="articletitle">{{ page.title }}</h2>
+                {% if page.similar %}
+                <div class="topic-links">
+                    <span>similar:</span>
+                    {% for item in page.similar %}
+                    <a href="{{ item.href }}">{{ item.name }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            {{ content }}
+        </main>
+    </div>
+
+    <footer class="wiki-footer" id="footer">
+        {% if page.page_author %}
+        <div class="footer-attribution">
+            original page author · {{ page.page_author }}
+        </div>
+        {% endif %}
+    </footer>
+    <script src="{{ '/article.js' | relative_url }}"></script>
+</body>
+</html>
