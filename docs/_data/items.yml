@@ -1,0 +1,9 @@
+# Item / flower / effect id -> wiki presentation (icon, link, label).
+# Items not listed here fall back to their display name in the layout.
+# Add entries as cdn/ icons become available. Seeded with what has art today.
+
+forestry:bee_comb_honey: { name: "Honey Comb", icon: /cdn/honeycomb.png, link: /Honey+Comb/ }
+
+# Centrifuge outputs (not bee products, but referenced elsewhere; icons exist):
+forestry:beeswax:    { name: "Beeswax",    icon: /cdn/beeswax.png,    link: /Beeswax/ }
+forestry:honey_drop: { name: "Honey Drop", icon: /cdn/honey_drop.png, link: /Honey+Drop/ }

@@ -1,0 +1,14 @@
+# Hive id -> wiki presentation (display name, biome blurb, link).
+# Hand-maintained: hive biome eligibility lives in imperative mod code, not the dump.
+
+forestry:beehive_forest:  { name: "Forest Hive",  biomes: "Non-snowy forests",        link: /Hives/ }
+forestry:beehive_meadows: { name: "Meadows Hive", biomes: "Plains and non-forest land", link: /Hives/ }
+forestry:beehive_desert:  { name: "Desert Hive",  biomes: "Deserts and arid biomes",   link: /Hives/ }
+forestry:beehive_jungle:  { name: "Jungle Hive",  biomes: "Jungles",                   link: /Hives/ }
+forestry:beehive_end:     { name: "End Hive",     biomes: "The End",                   link: /Hives/ }
+forestry:beehive_snow:    { name: "Snow Hive",    biomes: "Snowy biomes",              link: /Hives/ }
+forestry:beehive_swamp:   { name: "Swamp Hive",   biomes: "Swamps (non-snowy)",        link: /Hives/ }
+forestry:beehive_savanna: { name: "Savanna Hive", biomes: "Savannas",                  link: /Hives/ }
+forestry:beehive_lush:    { name: "Lush Hive",    biomes: "Lush caves",                link: /Hives/ }
+forestry:beehive_aquatic: { name: "Aquatic Hive", biomes: "Warm oceans",               link: /Hives/ }
+forestry:beehive_nether:  { name: "Nether Hive",  biomes: "The Nether",                link: /Hives/ }
