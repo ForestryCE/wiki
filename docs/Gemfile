@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem "jekyll", "~> 4.4"
+gem "webrick"   # needed to `jekyll serve` on Ruby 3.x
+gem "erb"       # no longer a default gem on Ruby 3.4+; Jekyll requires it
+gem "csv"       # likewise dropped from Ruby 3.4 default gems
+gem "base64"    # likewise dropped from Ruby 3.4 default gems

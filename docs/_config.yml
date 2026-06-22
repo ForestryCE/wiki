@@ -1,0 +1,6 @@
+title: Forestry CE Wiki
+description: A Wiki all about the modern Minecraft mod - Forestry Community Edition
+url: "https://forestryce.github.io"
+baseurl: "/wiki"
+
+# Jekyll 4 already excludes Gemfile/vendor/_site; nothing extra needed here yet.
