@@ -1,0 +1,10 @@
+{
+  "name": "forestry-wiki-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync-bees": "node scripts/sync-bees.mjs",
+    "test": "node --test"
+  }
+}
