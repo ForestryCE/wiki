@@ -27,7 +27,7 @@
         <div class="text-col">
           <div class="warning-panel"><img src="{{ '/cdn/warning.png' | relative_url }}"><span>This page's game data was automatically generated from the mod. Help expand it by <a href="https://github.com/ForestryCE/wiki/">Contributing</a>!</span></div>
           {{ content }}
-          {% if page.image %}<div class="articleimage"><img src="{{ page.image }}"></div>{% endif %}
+          {% if page.article_image %}<div class="articleimage"><img src="{{ page.article_image }}"></div>{% endif %}
         </div>
         <div class="table-col">{% include bee-info-table.html bee=bee page=page %}</div>
       </div>
