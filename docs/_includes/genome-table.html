@@ -1,0 +1,16 @@
+{%- comment -%} Default-Genome table from bee.genome (display strings). Param: bee. {%- endcomment -%}
+<div class="table-col">
+  <table class="wiki-info-table2">
+    {%- assign g = include.bee.genome -%}
+    {%- assign rows = "lifespan:Life,speed:Worker,temperature_tolerance:Temperature Tolerance,humidity_tolerance:Humidity Tolerance,fertility:Fertility,territory:Territory,activity:Activity" | split: "," -%}
+    {%- for row in rows -%}
+      {%- assign kv = row | split: ":" -%}
+      {%- assign key = kv[0] -%}
+      {%- assign label = kv[1] -%}
+      {%- assign trait = g[key] -%}
+      {%- if trait -%}
+      <tr><td class="table2-1"><b>{{ label }}</b></td><td>{{ trait.display }}</td></tr>
+      {%- endif -%}
+    {%- endfor -%}
+  </table>
+</div>

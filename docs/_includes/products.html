@@ -1,0 +1,16 @@
+{%- comment -%}
+The bee's products with production chances (from the dump). Param: bee.
+NOTE: this is the bee's output, not a centrifuge recipe (comb -> beeswax),
+which is item-processing data not present in the bee dump.
+{%- endcomment -%}
+{%- if include.bee.products and include.bee.products.size > 0 -%}
+<div class="centrifuge-grid-output">
+  {%- for p in include.bee.products -%}
+  {%- assign pct = p.chance | times: 100 | round -%}
+  {%- capture lbl %} - {{ pct }}%{% endcapture -%}
+  <div class="minecraft-item">{% include item-icon.html id=p.item name=p.display label=lbl %}</div>
+  {%- endfor -%}
+</div>
+{%- else -%}
+<p>Produces no items.</p>
+{%- endif -%}

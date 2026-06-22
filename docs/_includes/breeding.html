@@ -1,0 +1,34 @@
+{%- comment -%}
+Breeding mutations. Param: bee.
+  mutations_into  -> "Bred from" (parent + parent => this species)
+  mutations_from  -> "Breeds into" (this + partner => result)
+Species ids resolve to display names via site.data.bees and to page links via
+the filename rule (drop "forestry:", else "ns:path" -> "ns__path").
+{%- endcomment -%}
+{%- assign into = include.bee.mutations_into -%}
+{%- assign from = include.bee.mutations_from -%}
+{%- if into and into.size > 0 -%}
+<div class="subsection"><h4>Bred from</h4><ul>
+{%- for m in into -%}
+  {%- assign p1 = site.data.bees[m.parent1] -%}
+  {%- assign p2 = site.data.bees[m.parent2] -%}
+  {%- assign f1 = m.parent1 | replace: 'forestry:', '' | replace: ':', '__' -%}
+  {%- assign f2 = m.parent2 | replace: 'forestry:', '' | replace: ':', '__' -%}
+  {%- assign pct = m.chance | times: 100 | round: 1 -%}
+  <li><a href="{{ '/bees/' | append: f1 | append: '/' | relative_url }}">{{ p1.display_name | default: m.parent1 }}</a> + <a href="{{ '/bees/' | append: f2 | append: '/' | relative_url }}">{{ p2.display_name | default: m.parent2 }}</a> &rarr; {{ pct }}%{% if m.conditions and m.conditions.size > 0 %} <span class="reference">({{ m.conditions | join: '; ' }})</span>{% endif %}</li>
+{%- endfor -%}
+</ul></div>
+{%- endif -%}
+{%- if from and from.size > 0 -%}
+<div class="subsection"><h4>Breeds into</h4><ul>
+{%- for m in from -%}
+  {%- assign partner = site.data.bees[m.partner] -%}
+  {%- assign result = site.data.bees[m.result] -%}
+  {%- assign fp = m.partner | replace: 'forestry:', '' | replace: ':', '__' -%}
+  {%- assign fr = m.result | replace: 'forestry:', '' | replace: ':', '__' -%}
+  {%- assign pct = m.chance | times: 100 | round: 1 -%}
+  <li>+ <a href="{{ '/bees/' | append: fp | append: '/' | relative_url }}">{{ partner.display_name | default: m.partner }}</a> &rarr; <a href="{{ '/bees/' | append: fr | append: '/' | relative_url }}">{{ result.display_name | default: m.result }}</a> ({{ pct }}%)</li>
+{%- endfor -%}
+</ul></div>
+{%- endif -%}
+{%- unless into.size > 0 or from.size > 0 -%}<p>No known mutations.</p>{%- endunless -%}

@@ -1,0 +1,12 @@
+{%- comment -%} Hives that drop this species, with princess %. Param: bee. {%- endcomment -%}
+{%- if include.bee.obtained_from and include.bee.obtained_from.size > 0 -%}
+<ul>
+{%- for o in include.bee.obtained_from -%}
+  {%- assign hive = site.data.hives[o.hive] -%}
+  {%- assign pct = o.princess_chance | times: 100 | round: 1 -%}
+  <li><a href="{{ hive.link | relative_url }}">{{ hive.name | default: o.hive }}</a> — {{ pct }}% princess{% if hive.biomes %} ({{ hive.biomes }}){% endif %}</li>
+{%- endfor -%}
+</ul>
+{%- else -%}
+<p>Not obtained directly from a hive.</p>
+{%- endif -%}

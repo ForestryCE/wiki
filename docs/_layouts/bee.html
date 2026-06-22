@@ -1,0 +1,73 @@
+{%- assign bee = site.data.bees[page.species_id] -%}
+<!DOCTYPE html>
+<html lang="en">
+<head id="head">
+  <meta property="og:site_name" content="Forestry: Community Edition - Wiki">
+  <meta property="og:title" content="{{ page.title }}">
+  <meta property="og:description" content="{{ page.og_description }}">
+  <meta property="og:image" content="{{ page.og_image }}">
+  <meta name="theme-color" content="#f3a90a" data-react-helmet="true" />
+  {% if page.image %}<link rel="icon" href="{{ page.image }}">{% endif %}
+  <link rel="stylesheet" href="{{ '/article_style.css' | relative_url }}">
+</head>
+<body>
+  <header class="sticky-header" id="mainHeader"></header>
+  <div class="wiki-grid">
+    <aside class="toc-sidebar"><h3>{{ page.title }}</h3><ul class="toc-list" id="dynamic-toc"></ul></aside>
+    <main class="wiki-content">
+      <div class="article-header">
+        <h2 style="text-transform:uppercase" id="articletitle">{{ page.title }}</h2>
+        {%- if page.similar and page.similar.size > 0 %}
+        <div class="topic-links"><span>similar:</span>
+          {% for item in page.similar %}<a href="{{ item.href }}">{{ item.name }}</a>{% endfor %}
+        </div>{% endif -%}
+      </div>
+
+      <div class="split-panel">
+        <div class="text-col">
+          <div class="warning-panel"><img src="{{ '/cdn/warning.png' | relative_url }}"><span>This page's game data was automatically generated from the mod. Help expand it by <a href="https://github.com/ForestryCE/wiki/">Contributing</a>!</span></div>
+          {{ content }}
+          {% if page.image %}<div class="articleimage"><img src="{{ page.image }}"></div>{% endif %}
+        </div>
+        <div class="table-col">{% include bee-info-table.html bee=bee page=page %}</div>
+      </div>
+
+      <section class="collapsible-section">
+        <input type="checkbox" class="section-toggle" id="toggle1" checked>
+        <label for="toggle1" class="section-label">Default Genome</label>
+        <div class="section-content">
+          <div class="subsection"><h4>Defaults</h4>{% include genome-table.html bee=bee %}</div>
+          {% if page.sections.variants %}<div class="subsection"><h4>Variants</h4>{{ page.sections.variants | markdownify }}</div>{% endif %}
+        </div>
+      </section>
+
+      <section class="collapsible-section">
+        <input type="checkbox" class="section-toggle" id="toggle2">
+        <label for="toggle2" class="section-label">Traits</label>
+        <div class="section-content">
+          {% if page.sections.traits %}{{ page.sections.traits | markdownify }}{% endif %}
+          <div class="subsection"><h4>Products</h4>{% include products.html bee=bee %}</div>
+        </div>
+      </section>
+
+      <section class="collapsible-section">
+        <input type="checkbox" class="section-toggle" id="toggle3">
+        <label for="toggle3" class="section-label">Obtaining</label>
+        <div class="section-content">
+          <div class="subsection"><h4>Hives</h4>{% include obtaining.html bee=bee %}</div>
+          {% include breeding.html bee=bee %}
+        </div>
+      </section>
+
+      {% if page.sections.history %}
+      <section class="collapsible-section">
+        <input type="checkbox" class="section-toggle" id="toggle4">
+        <label for="toggle4" class="section-label">History</label>
+        <div class="section-content">{{ page.sections.history | markdownify }}</div>
+      </section>{% endif %}
+    </main>
+  </div>
+  <footer class="wiki-footer" id="footer">{% if page.page_author %}<div class="footer-attribution">original page author · {{ page.page_author }}</div>{% endif %}</footer>
+  <script src="{{ '/article.js' | relative_url }}"></script>
+</body>
+</html>

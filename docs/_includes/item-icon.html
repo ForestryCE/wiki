@@ -1,0 +1,17 @@
+{%- comment -%}
+Renders one item id as a tooltip icon. Params:
+  id    (required) item id, e.g. "forestry:bee_comb_honey"
+  name  (optional) fallback display name when the id is not in _data/items.yml
+  label (optional) text appended inside the tooltip (e.g. " - 30%")
+Falls back to a text label (no icon) for items without an items.yml entry.
+{%- endcomment -%}
+{%- assign item = site.data.items[include.id] -%}
+<div class="tooltip">
+  {%- if item -%}
+  <a href="{{ item.link | relative_url }}"><img src="{{ item.icon | relative_url }}" class="icon"></a>
+  <span class="tooltiptext"><span class="tooltipbg">{{ item.name }}{{ include.label }}</span></span>
+  {%- else -%}
+  <span class="icon">{{ include.name | default: include.id | split: ':' | last }}</span>
+  <span class="tooltiptext"><span class="tooltipbg">{{ include.name | default: include.id }}{{ include.label }}</span></span>
+  {%- endif -%}
+</div>

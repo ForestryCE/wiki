@@ -1,0 +1,34 @@
+{%- comment -%} Right-column info table. Params: bee, page (for the sprite image). {%- endcomment -%}
+<table class="wiki-info-table">
+  <tr>
+    <td colspan="2" class="image-cell">
+      <div class="table-image">
+        {%- if include.page.image %}<img src="{{ include.page.image }}" alt="{{ include.page.title }}" class="mainimage" id="mainimage">{% endif -%}
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="{{ '/Taxonomy' | relative_url }}">Family</a></td>
+    <td>{{ include.bee.family | default: 'Bees' }}</td>
+  </tr>
+  {%- if include.bee.products and include.bee.products.size > 0 -%}
+  <tr>
+    <td><a href="{{ '/Bee+Products' | relative_url }}">Products</a></td>
+    <td>
+      {%- for p in include.bee.products -%}{% include item-icon.html id=p.item name=p.display %}{%- endfor -%}
+    </td>
+  </tr>
+  {%- endif -%}
+  <tr>
+    <td><a href="{{ '/Flower+Type' | relative_url }}">Flowers</a></td>
+    <td>{{ include.bee.genome.flower_type.display }}</td>
+  </tr>
+  <tr>
+    <td><a href="{{ '/Bee+Effect' | relative_url }}">Bee Effect</a></td>
+    <td>{{ include.bee.genome.bee_effect.display | default: 'None' }}</td>
+  </tr>
+  <tr>
+    <td><b>Authority</b></td>
+    <td>{{ include.bee.authority }}</td>
+  </tr>
+</table>
