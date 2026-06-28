@@ -2,7 +2,7 @@
 species_id: forestry:bee_forest
 layout: bee
 title: Forest Bee
-permalink: /Forest+Bee/
+permalink: /bees/bee_forest
 image: forestbee.png
 article_image: foresthive.png
 og_description: The Forest Bee is a common forest pest found in Forest Hives. They can be crossbred into other bees
