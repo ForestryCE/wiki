@@ -40,6 +40,15 @@
 		transition: transform 0.1s ease-out;
 	}
 
+	.fourofour {
+		text-decoration: none;
+		color: white;
+	}
+	.fouroblack {
+		text-decoration: none;
+		color: black;
+	}
+
 	@keyframes rotate {
 		0% {rotate: 0deg}
 		100% {rotate: 360deg;}
